@@ -35,7 +35,7 @@ syntax region dockerfileText   start="\s" skip="\\$" end="$" contains=@dockerfil
 syntax region dockerfileScript start="\s" skip="\\$" end="$" contains=@dockerfileInline,@shSubShList contained
 syntax region dockerfileArray  start="\s*\[" end="]" contains=dockerfileString contained
 
-syntax match dockerfileComment "#.*$" contains=@dockerfileInline
+syntax match dockerfileComment "\v^\s*#.*$"
 
 hi def link dockerfileKeyword       Keyword
 hi def link dockerfileComment       Comment
