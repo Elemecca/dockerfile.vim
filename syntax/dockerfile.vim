@@ -31,8 +31,8 @@ syntax match dockerfileKeyword /\v^\s*(FROM|MAINTAINER|EXPOSE|ENV)/ nextgroup=do
 syntax match dockerfileKeyword /\v^\s*(ADD|VOLUME|USER|WORKDIR)/    nextgroup=dockerfileText
 syntax match dockerfileKeyword /\v^\s*(RUN|CMD|ENTRYPOINT)/ nextgroup=dockerfileScript,dockerfileArray
 
-syntax region dockerfileText   start="\s" skip="\\$" end="$" contains=@dockerfileInline contained
-syntax region dockerfileScript start="\s" skip="\\$" end="$" contains=@dockerfileInline,@shSubShList contained
+syntax region dockerfileText   start="\s" skip="\\$" end="$" keepend contains=@dockerfileInline contained
+syntax region dockerfileScript start="\s" skip="\\$" end="$" keepend contains=@dockerfileInline,@shSubShList contained
 syntax region dockerfileArray  start="\s*\[" end="]" contains=dockerfileString contained
 
 syntax match dockerfileComment "\v^\s*#.*$"
