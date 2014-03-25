@@ -12,7 +12,7 @@ elseif exists("b:current_syntax")
 endif
 
 " load shell syntax for use in RUN and company
-let g:sh_noisk           " don't mess with iskeyword
+let g:sh_noisk=1         " don't mess with iskeyword
 let g:sh_fold_enabled=0  " don't try to fold on shell constructs
 syntax include syntax/sh.vim
 
@@ -25,12 +25,11 @@ syntax match dockerfileLineContError "\\\s\+$" contained
 
 syntax cluster dockerfileInline contains=dockerfileLineCont,dockerfileLineContError
 
-syntax region dockerfileString start=/"/ end=/"/ contained
+syntax region dockerfileString start=/"/ end=/"/ contained oneline
 
 syntax match dockerfileKeyword /\v^\s*(FROM|MAINTAINER|EXPOSE|ENV)/ nextgroup=dockerfileText
 syntax match dockerfileKeyword /\v^\s*(ADD|VOLUME|USER|WORKDIR)/    nextgroup=dockerfileText
-syntax match dockerfileKeyword /\v^\s*(RUN)/ nextgroup=dockerfileScript
-syntax match dockerfileKeyword /\v^\s*(CMD|ENTRYPOINT)/ nextgroup=dockerfileScript,dockerfileArray
+syntax match dockerfileKeyword /\v^\s*(RUN|CMD|ENTRYPOINT)/ nextgroup=dockerfileScript,dockerfileArray
 
 syntax region dockerfileText   start="\s" skip="\\$" end="$" contains=@dockerfileInline contained
 syntax region dockerfileScript start="\s" skip="\\$" end="$" contains=@dockerfileInline,@shSubShList contained
