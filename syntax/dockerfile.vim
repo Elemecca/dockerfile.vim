@@ -14,14 +14,14 @@ endif
 " load shell syntax for use in RUN and company
 let g:sh_noisk=1         " don't mess with iskeyword
 let g:sh_fold_enabled=0  " don't try to fold on shell constructs
-syntax include syntax/sh.vim
+syntax include @shAll syntax/sh.vim
 
 " Dockerfile keywords are case-insensitive
 " note that this does not affect the shell syntax loaded earlier
 syntax case ignore
 
-syntax match dockerfileLineCont      "\\$"     contained
-syntax match dockerfileLineContError "\\\s\+$" contained
+syntax match dockerfileLineCont      "\\\n"    contained containedin=@shAll extend
+syntax match dockerfileLineContError "\\\s\+$" contained containedin=@shAll
 
 syntax cluster dockerfileInline contains=dockerfileLineCont,dockerfileLineContError
 
@@ -31,8 +31,8 @@ syntax match dockerfileKeyword /\v^\s*(FROM|MAINTAINER|EXPOSE|ENV)/ nextgroup=do
 syntax match dockerfileKeyword /\v^\s*(ADD|VOLUME|USER|WORKDIR)/    nextgroup=dockerfileText
 syntax match dockerfileKeyword /\v^\s*(RUN|CMD|ENTRYPOINT)/ nextgroup=dockerfileScript,dockerfileArray
 
-syntax region dockerfileText   start="\s" skip="\\$" end="$" keepend contains=@dockerfileInline contained
-syntax region dockerfileScript start="\s" skip="\\$" end="$" keepend contains=@dockerfileInline,@shSubShList contained
+syntax region dockerfileText   start="\s" end="$" keepend contains=@dockerfileInline contained
+syntax region dockerfileScript start="\s" end="$" keepend contains=@dockerfileInline,@shSubShList contained
 syntax region dockerfileArray  start="\s*\[" end="]" contains=dockerfileString contained
 
 syntax match dockerfileComment "\v^\s*#.*$"
