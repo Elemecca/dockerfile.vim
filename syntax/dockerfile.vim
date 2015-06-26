@@ -28,7 +28,7 @@ syntax cluster dockerfileInline contains=dockerfileLineCont,dockerfileLineContEr
 syntax region dockerfileString start=/"/ end=/"/ contained oneline
 
 syntax match dockerfileKeyword /\v^\s*(FROM|MAINTAINER|EXPOSE|ENV)/ nextgroup=dockerfileText
-syntax match dockerfileKeyword /\v^\s*(ADD|VOLUME|USER|WORKDIR)/    nextgroup=dockerfileText
+syntax match dockerfileKeyword /\v^\s*(ADD|COPY|VOLUME|USER|WORKDIR)/    nextgroup=dockerfileText
 syntax match dockerfileKeyword /\v^\s*(RUN|CMD|ENTRYPOINT)/ nextgroup=dockerfileScript,dockerfileArray
 
 syntax region dockerfileText   start="\s" end="$" keepend contains=@dockerfileInline contained
